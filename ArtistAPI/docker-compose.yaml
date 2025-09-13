@@ -12,7 +12,7 @@ services:
     ports:
       - "3306:3306"
 
-  # Servicio de tu API de Spring Boot
+  # Servicio de API de Spring Boot
   artist-api:
     build: .
     container_name: artist-api
