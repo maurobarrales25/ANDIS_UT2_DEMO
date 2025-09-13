@@ -17,11 +17,18 @@ FROM eclipse-temurin:17-jre-focal
 # Establece el directorio de trabajo
 WORKDIR /app
 
+# Instalar cliente MySQL
+RUN apt-get update && apt-get install -y default-mysql-client && rm -rf /var/lib/apt/lists/*
+
 # Copia el JAR generado antes
 COPY --from=builder /app/target/ArtistAPI-0.0.1-SNAPSHOT.jar app.jar
+
+# Copia el script de espera al contenedor
+COPY wait-for-mysql.sh /wait-for-mysql.sh
+RUN chmod +x /wait-for-mysql.sh
 
 # Expone la API en el puerto
 EXPOSE 8080
 
 # Comando para ejecutar la aplicación
-ENTRYPOINT ["java", "-jar", "app.jar"]
+ENTRYPOINT ["/wait-for-mysql.sh", "ArtistAPI-db", "java", "-jar", "app.jar"]
