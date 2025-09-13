@@ -33,3 +33,6 @@ build/
 .vscode/
 
 .env
+
+# Ignorar datos de MySQL
+ArtistAPI/mysql_data/
