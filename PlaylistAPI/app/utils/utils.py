@@ -13,7 +13,7 @@ def serialize_object_ids(docs: List):
 
 async def get_user(user_id):
     async with httpx.AsyncClient() as client:
-        response = await client.get(f"http://users-service:8000/api/users/{str(user_id)}")
+        response = await client.get(f"http://user-api:8000/api/users/{str(user_id)}")
         data = response.json()
 
         if data.get("detail"):
