@@ -24,7 +24,7 @@ class UserRepository:
         conn = get_conn()
         cur = conn.cursor()
         cur.execute(
-            "INSERT INTO users (name, email) VALUES (%s, %s, %s) RETURNING id",
+            "INSERT INTO users (name, email) VALUES (%s, %s) RETURNING id",
             (user.name, user.email)
         )
         new_id = cur.fetchone()["id"]

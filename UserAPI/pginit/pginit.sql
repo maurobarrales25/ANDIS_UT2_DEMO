@@ -10,3 +10,6 @@ INSERT INTO users (id, name, email) VALUES
     (1, 'pepe', 'pepe@gmail.com'),
     (2, 'lucia', 'lucia@outlook.com')
 ON CONFLICT (id) DO NOTHING;
+
+-- Ajusta id luego de agregar los usuarios precargados
+SELECT setval('users_id_seq', (SELECT MAX(id) FROM users));
