@@ -31,4 +31,4 @@ RUN chmod +x /wait-for-mysql.sh
 EXPOSE 8080
 
 # Comando para ejecutar la aplicación
-ENTRYPOINT ["/wait-for-mysql.sh", "ArtistAPI-db", "java", "-jar", "app.jar"]
+ENTRYPOINT ["/wait-for-mysql.sh", "artist-db", "java", "-jar", "app.jar"]

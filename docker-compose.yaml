@@ -1,0 +1,59 @@
+version: '3.8'
+
+services:
+  # API GATEWAY (punto de entrada)
+  api-gateway:
+    build: ./api-gateway
+    container_name: api-gateway
+    ports:
+      - "${GATEWAY_PORT}:80" 
+    depends_on:
+      - artist-api
+      - user-api
+
+  # API DE ARTISTAS
+  artist-api:
+    build: ./ArtistAPI
+    container_name: artist-api
+    ports:
+      - "${ARTIST_API_PORT}:8080"
+    env_file: 
+      - ./ArtistAPI/.env
+    depends_on:
+      - artist-db
+
+  artist-db:
+    image: mysql:8.0
+    container_name: artist-db
+    env_file:
+      - ./ArtistAPI/.env
+    volumes:
+      - artist-db-data:/var/lib/mysql
+    ports:
+      - "${MYSQL_PORT}:3306"
+
+  # API DE USUARIOS
+  user-api:
+    build: ./UserAPI
+    container_name: user-api
+    ports:
+      - "${USERS_API_PORT}:8000"
+    env_file:  
+      - ./UserAPI/.env
+    depends_on:
+      - user-db
+
+  user-db:
+    image: postgres:17
+    container_name: user-db
+    env_file:
+      - ./UserAPI/.env
+    volumes:
+      - user-db-data:/var/lib/postgresql/data
+      - ./UserAPI/pginit:/docker-entrypoint-initdb.d
+    ports:
+      - "${POSTGRES_PORT}:5432"
+      
+volumes:
+  artist-db-data:
+  user-db-data:
