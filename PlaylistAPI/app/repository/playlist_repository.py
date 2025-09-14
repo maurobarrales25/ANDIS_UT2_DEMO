@@ -22,7 +22,7 @@ class PlaylistRepository:
         return serialize_object_id(playlist)
 
     async def get_playlists_by_user_id(self, user_id):
-        playlists_cursor = db.get_collection("playlist").find({"user_id": user_id})
+        playlists_cursor = db.get_collection("playlist").find({"user.id": user_id})
         playlists = await playlists_cursor.to_list()
 
         if len(playlists) == 0:
