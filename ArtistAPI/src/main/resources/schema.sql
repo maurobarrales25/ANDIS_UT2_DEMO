@@ -14,3 +14,13 @@ CREATE TABLE IF NOT EXISTS album
     artist_id INT,
     CONSTRAINT fk_artist_id FOREIGN KEY (artist_id) REFERENCES artist(artist_id)
     );
+
+CREATE TABLE IF NOT EXISTS song
+(
+    song_id INT PRIMARY KEY AUTO_INCREMENT,
+    song_name VARCHAR (255) NOT NULL,
+    artist_id INT,
+    album_id INT,
+    CONSTRAINT fk_song_artist_id FOREIGN KEY (artist_id) REFERENCES artist(artist_id),
+    CONSTRAINT fk_song_album_id FOREIGN KEY (album_id) REFERENCES album(album_id)
+    );
