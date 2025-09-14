@@ -25,7 +25,7 @@ public class SongRepository {
     };
 
     public Song getSongByID(int songID) {
-        String sql = "select * from song where songID=?";
+        String sql = "select * from song where song_id=?";
         try {
             return jdbcTemplate.queryForObject(sql, songMapper, songID);
         }
@@ -40,7 +40,7 @@ public class SongRepository {
     }
 
     public Song getSongByName(String songName) {
-        String sql = "select * from song where songName=?";
+        String sql = "select * from song where song_name=?";
         try{
             return jdbcTemplate.queryForObject(sql, songMapper, songName);
         }
@@ -50,12 +50,12 @@ public class SongRepository {
     }
 
     public List<Song> getSongsByArtistID(int artistID) {
-        String sql = "select * from song where artistID=?";
+        String sql = "select * from song where artist_id=?";
         return jdbcTemplate.query(sql, songMapper, artistID);
     }
 
     public List<Song> getSongsByAlbumID(int albumID) {
-        String sql = "select * from song where albumID=?";
+        String sql = "select * from song where album_id=?";
         return jdbcTemplate.query(sql, songMapper, albumID);
     }
 }
