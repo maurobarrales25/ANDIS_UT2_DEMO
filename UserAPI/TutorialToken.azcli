@@ -1,0 +1,60 @@
+# Pasos para que funcione (no son necesarios ya que se dejó el caché del keycloak)
+
+# - crear realm: demo-realm
+# - crear cliente: demo-client
+# - id: demo-client
+# - Valid rediret URLs: 127.0.0.1:8002/*
+# - direct access grant
+# - Client Auth y authorization
+# - Standard Flow
+# - PCKE: S256
+# - En Credentials, copiar el Client Secret y pegarlo en el archivo .env en KEYCLOAK_CLIENT_SECRET
+# - crear usuario: testuser
+# - contraseña: test
+# - verificacion activada
+# - crear client scope: audience-demo-client
+# - client-scope: default
+# - mapper crear de tipo Audience: audience-demo-client
+# - Included Custom Audience: demo-client
+
+# .env:
+
+""""""""""""""""""""""""
+
+POSTGRES_USER=nombreusuario
+POSTGRES_PASSWORD=contraseña
+POSTGRES_DB=usersdb
+POSTGRES_HOST=users-db
+POSTGRES_PORT=5432 ---> o el que prefieras
+FASTAPI_PORT=8002 ---> o el que prefieras
+
+KEYCLOAK_ISSUER=http://localhost:8080/realms/demo-realm
+KEYCLOAK_URL=http://keycloak:8080
+KEYCLOAK_REALM=demo-realm
+KEYCLOAK_CLIENT_ID=demo-client
+KEYCLOAK_AUDIENCE=http://localhost:8080/realms/demo-realm
+KEYCLOAK_PORT=8080
+KEYCLOAK_CLIENT_SECRET=SECRET_TUYO ---> el que te dio keycloak
+
+""""""""""""""""""""""""
+
+# Obtener token con postman
+
+http://localhost:8080/realms/demo-realm/protocol/openid-connect/token
+bulk edit:
+grant_type:password
+client_id:demo-client
+client_secret: SECRET_TUYO # el mismo del .env
+username:testuser
+password:test
+
+# Con Curl
+
+curl -X POST "http://localhost:8080/realms/demo-realm/protocol/openid-connect/token" ^
+ -H "Content-Type: application/x-www-form-urlencoded" ^
+ -d "grant_type=password" ^
+ -d "client_id=demo-client" ^
+ -d "client_secret=SECRET_TUYO" ^
+ -d "username=testuser" ^
+ -d "password=test" ^
+ -o token.json

@@ -208,3 +208,6 @@ __marimo__/
 
 # PGDATA
 pgdata/
+
+# pruebas de keycloak
+.issprueba.py

@@ -8,6 +8,22 @@ services:
     volumes:
       - ./pgdata:/var/lib/postgresql/data
       - ./pginit:/docker-entrypoint-initdb.d
+      - ./app:/app
+  keycloak:
+    image: quay.io/keycloak/keycloak:26.3.0
+    command: start-dev
+    environment:
+      KEYCLOAK_ADMIN: admin
+      KEYCLOAK_ADMIN_PASSWORD: admin
+    ports:
+      - "${KEYCLOAK_PORT:-8080}:8080"
+    volumes:
+      - ./keycloak_data:/opt/keycloak/data/h2
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:${KEYCLOAK_PORT:-8080}/"]
+      interval: 10s
+      timeout: 10s
+      retries: 10
 
   users-service:
     build: .
@@ -19,3 +35,4 @@ services:
       - "${FASTAPI_PORT:-8000}:8000"
     depends_on:
       - users-db
+      - keycloak
