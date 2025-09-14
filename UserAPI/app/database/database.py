@@ -2,7 +2,7 @@ import os
 import psycopg2
 from psycopg2.extras import RealDictCursor
 
-POSTGRES_HOST = os.environ.get("POSTGRES_HOST", "localhost")
+POSTGRES_HOST = os.environ.get("POSTGRES_HOST", "user-db")
 POSTGRES_PORT = os.environ.get("POSTGRES_PORT", 5432)
 POSTGRES_NAME = os.environ.get("POSTGRES_NAME", "usersdb")
 POSTGRES_USER = os.environ.get("POSTGRES_USER", "postgres")
