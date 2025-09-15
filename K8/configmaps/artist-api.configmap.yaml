@@ -1,0 +1,7 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: artist-api-config
+data:
+  DB_HOST: artist-db
+  DB_PORT: "3306"
