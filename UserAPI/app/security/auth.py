@@ -15,6 +15,7 @@ security = HTTPBearer()
 # Config desde .env
 KEYCLOAK_INTERNAL_URL = os.environ.get("KEYCLOAK_URL", "http://keycloak:8080")
 KEYCLOAK_REALM = os.environ.get("KEYCLOAK_REALM", "demo-realm")
+KEYCLOAK_PORT = os.environ.get("KEYCLOAK_PORT", "8080")
 KEYCLOAK_ISSUER = os.environ.get("KEYCLOAK_ISSUER", f"http://localhost:8080/realms/{KEYCLOAK_REALM}")
 KEYCLOAK_CLIENT_ID = os.environ.get("KEYCLOAK_CLIENT_ID", "demo-client")
 KEYCLOAK_AUDIENCE = os.environ.get("KEYCLOAK_AUDIENCE", KEYCLOAK_CLIENT_ID)

@@ -15,7 +15,7 @@ def get_users(token_data: dict = Depends(verify_token)):
     return user_service.get_all_users()
 
 @router.get("/users/{id}", response_model=UserSchema)
-def get_user_by_id(id: int):
+def get_user_by_id(id: int, token_data: dict = Depends(verify_token)):
     return user_service.get_user_by_id(id)
 
 @router.post("/users", response_model=UserSchema)

@@ -26,7 +26,7 @@ async def get_songs(playlist):
         songs_id = playlist.get('songs_ids')
 
         for song_id in songs_id:
-            response = await client.get(f"http://artist-api:8080/song/by-id?id={str(song_id)}")
+            response = await client.get(f"http://artist-api:8080/artistapi/song/by-id?id={str(song_id)}")
             data_songs = response.json()
             songs.append(data_songs)
             
@@ -39,7 +39,7 @@ async def get_songs(playlist):
 async def get_artist(songs):
     async with httpx.AsyncClient() as client:
         for artist in songs:
-            response = await client.get(f"http://artist-api:8080/artist/by-id?id={artist.get('artistID')}")
+            response = await client.get(f"http://artist-api:8080/artistapi/artist/by-id?id={artist.get('artistID')}")
             data_artists = response.json()
             artist["artist"] = data_artists
             artist.pop('artistID')
@@ -47,7 +47,9 @@ async def get_artist(songs):
 
 async def get_song(song_id):
     async with httpx.AsyncClient() as client:
-        response = await client.get(f"http://artist-api:8080/song/by-id?id={str(song_id)}")
+
+        response = await client.get(f"http://artist-api:8080/artistapi/song/by-id?id={str(song_id)}")
+
         data = response.json()
 
         if data.get("status"):

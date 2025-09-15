@@ -1,0 +1,4 @@
+*.cmd text eol=crlf
+*.sh text eol=lf
+issprueba.py text eol=lf
+keycloak_data/keycloak.trace.db text eol=lf
