@@ -16,7 +16,7 @@ spec:
     spec:
       containers:
         - name: playlist-api
-          image: maurobarrales/playlist-api:latest
+          image: ignaciordgz/playlist-api:latest
           ports:
             - containerPort: 8080
           env:

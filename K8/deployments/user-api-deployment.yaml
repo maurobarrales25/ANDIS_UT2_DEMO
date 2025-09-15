@@ -48,9 +48,9 @@ spec:
                   key: POSTGRES_PORT
             # Keycloak
             - name: KEYCLOAK_ISSUER
-              value: "http://keycloak:8081/realms/demo-realm"
+              value: "http://keycloak:8080/realms/demo-realm"
             - name: KEYCLOAK_URL
-              value: "http://keycloak:8081/"
+              value: "http://keycloak:8080/"
             - name: KEYCLOAK_REALM
               value: "demo-realm"
             - name: KEYCLOAK_CLIENT_ID
@@ -60,4 +60,4 @@ spec:
             - name: KEYCLOAK_AUDIENCE
               value: "http://localhost:8081/realms/demo-realm"
             - name: KEYCLOAK_PORT
-              value: "8081"
+              value: "8080"

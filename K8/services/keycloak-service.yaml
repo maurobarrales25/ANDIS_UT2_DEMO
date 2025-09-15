@@ -7,5 +7,5 @@ spec:
     app: keycloak
   ports:
     - protocol: TCP
-      port: 8081       # puerto interno que el pod expone
-      targetPort: 8081 # puerto dentro del contenedor
+      port: 8080 # puerto interno que el pod expone
+      targetPort: 8080 # puerto dentro del contenedor

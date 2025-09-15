@@ -17,11 +17,18 @@ spec:
       containers:
         - name: keycloak
           image: quay.io/keycloak/keycloak:24.0.1
-          args: ["start-dev", "--http-port=8081"]   # Keycloak use 8081
+          args: ["start-dev", "--http-port=8080", "--import-realm"] # Keycloak use 8081
           ports:
-            - containerPort: 8081                   # Contenedor expone 8081
+            - containerPort: 8080 # Contenedor expone 8081
           env:
             - name: KEYCLOAK_ADMIN
               value: admin
             - name: KEYCLOAK_ADMIN_PASSWORD
               value: admin
+          volumeMounts:
+            - name: keycloak-data
+              mountPath: /opt/keycloak/data
+      volumes:
+        - name: keycloak-data
+          persistentVolumeClaim:
+            claimName: keycloak-pvc
