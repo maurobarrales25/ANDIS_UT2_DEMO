@@ -1,0 +1,47 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: playlist-api
+  labels:
+    app: playlist-api
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: playlist-api
+  template:
+    metadata:
+      labels:
+        app: playlist-api
+    spec:
+      containers:
+        - name: playlist-api
+          image: maurobarrales/playlist-api:latest
+          ports:
+            - containerPort: 8080
+          env:
+            - name: MONGO_USER
+              valueFrom:
+                secretKeyRef:
+                  name: playlist-db-secret
+                  key: MONGO_USER
+            - name: MONGO_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: playlist-db-secret
+                  key: MONGO_PASSWORD
+            - name: MONGO_HOST
+              valueFrom:
+                configMapKeyRef:
+                  name: playlist-api-config
+                  key: MONGO_HOST
+            - name: MONGO_PORT
+              valueFrom:
+                configMapKeyRef:
+                  name: playlist-api-config
+                  key: MONGO_PORT
+            - name: MONGO_DB
+              valueFrom:
+                configMapKeyRef:
+                  name: playlist-api-config
+                  key: MONGO_DB

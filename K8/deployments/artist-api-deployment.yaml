@@ -1,0 +1,49 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: artist-api
+  labels:
+    app: artist-api
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: artist-api
+  template:
+    metadata:
+      labels:
+        app: artist-api
+    spec:
+      containers:
+        - name: artist-api
+          image: maurobarrales/artist-api:latest
+          ports:
+            - containerPort: 8080
+          env:
+            - name: DB_USER
+              valueFrom:
+                secretKeyRef:
+                  name: artist-db-secret
+                  key: DB_USER
+            - name: DB_PASS
+              valueFrom:
+                secretKeyRef:
+                  name: artist-db-secret
+                  key: DB_PASS
+            - name: DB_NAME
+              valueFrom:
+                secretKeyRef:
+                  name: artist-db-secret
+                  key: DB_NAME
+            - name: DB_HOST
+              valueFrom:
+                configMapKeyRef:
+                  name: artist-api-config
+                  key: DB_HOST
+            - name: DB_PORT
+              valueFrom:
+                configMapKeyRef:
+                  name: artist-api-config
+                  key: DB_PORT
+            - name: DB_URL
+              value: "jdbc:mysql://$(DB_HOST):$(DB_PORT)/$(DB_NAME)"
