@@ -16,10 +16,11 @@ spec:
     spec:
       containers:
         - name: user-api
-          image: maurobarrales/user-api:latest
+          image: agusting130/user-api:latest
           ports:
             - containerPort: 8000
           env:
+            # Postgres
             - name: POSTGRES_USER
               valueFrom:
                 secretKeyRef:
@@ -45,3 +46,18 @@ spec:
                 configMapKeyRef:
                   name: user-api-config
                   key: POSTGRES_PORT
+            # Keycloak
+            - name: KEYCLOAK_ISSUER
+              value: "http://keycloak:8081/realms/demo-realm"
+            - name: KEYCLOAK_URL
+              value: "http://keycloak:8081/"
+            - name: KEYCLOAK_REALM
+              value: "demo-realm"
+            - name: KEYCLOAK_CLIENT_ID
+              value: "demo-client"
+            - name: KEYCLOAK_CLIENT_SECRET
+              value: "GZUa2kQFL3racxYSPLPUqyuiEKqdIlCh"
+            - name: KEYCLOAK_AUDIENCE
+              value: "http://localhost:8081/realms/demo-realm"
+            - name: KEYCLOAK_PORT
+              value: "8081"
