@@ -11,9 +11,31 @@ def serialize_object_id(doc):
 def serialize_object_ids(docs: List):
     return [serialize_object_id(doc) for doc in docs]
 
+def get_token():
+    url = "http://keycloak:8080/realms/demo-realm/protocol/openid-connect/token"
+
+    data = {
+        "grant_type": "client_credentials",
+        "client_id": "demo-client",
+        "client_secret": "GZUa2kQFL3racxYSPLPUqyuiEKqdIlCh"
+    }
+
+    headers = {
+        "Content-Type": "application/x-www-form-urlencoded"
+    }
+
+    response = httpx.post(url, data=data, headers=headers)
+    return response.json()
+
 async def get_user(user_id):
+    token = get_token()
+    access_token = token.get('access_token')
+
     async with httpx.AsyncClient() as client:
-        response = await client.get(f"http://user-api:8000/api/users/{str(user_id)}")
+        response = await client.get(f"http://user-api:8000/api/users/{str(user_id)}", headers={
+            "Authorization" : f"Bearer {access_token}" 
+        })
+
         data = response.json()
 
         if data.get("detail"):
