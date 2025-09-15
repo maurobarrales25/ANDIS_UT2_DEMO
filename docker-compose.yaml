@@ -61,16 +61,10 @@ services:
     environment:
       KEYCLOAK_ADMIN: admin
       KEYCLOAK_ADMIN_PASSWORD: admin
-      KC_HTTP_PORT: ${KEYCLOAK_PORT:-8080}
     ports:
-      - "${KEYCLOAK_PORT:-8080}:${KEYCLOAK_PORT:-8080}"
+      - "8081:8080"
     volumes:
       - ./keycloak_data:/opt/keycloak/data/h2
-    healthcheck:
-      test: ["CMD", "curl", "-f", "http://localhost:${KEYCLOAK_PORT:-8080}/"]
-      interval: 10s
-      timeout: 10s
-      retries: 10
 
   # API DE PLAYLISTS
   playlist-api:
